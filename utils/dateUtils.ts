@@ -10,12 +10,19 @@ export const formatDate = (date: Date): string => {
 };
 
 export const formatDateForStorage = (date: Date): string => {
-  return date.toISOString().split('T')[0]; // YYYY-MM-DD format
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 };
 
 export const formatRelativeTime = (date: Date): string => {
   const now = new Date();
-  const diffTime = Math.abs(now.getTime() - date.getTime());
+  
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const compareDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  
+  const diffTime = Math.abs(today.getTime() - compareDate.getTime());
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
   
   if (diffDays === 0) {

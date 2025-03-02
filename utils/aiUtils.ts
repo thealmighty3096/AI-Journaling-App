@@ -1,5 +1,6 @@
 import OpenAI from 'openai';
 import Constants from 'expo-constants';
+import config from './config';
 
 
 //constants
@@ -85,7 +86,10 @@ const getOpenAIClient = () => {
   }
 };
 
-const openai = getOpenAIClient();
+const openai = new OpenAI({
+  apiKey: config.openai.apiKey || '', // Provide fallback empty string
+  dangerouslyAllowBrowser: true // Required for React Native web
+});
 
 // Fallback responses in case API calls fail
 const fallbackResponses = {
